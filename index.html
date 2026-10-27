@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NeonKey · Digital game cards in TT$</title>
+<meta name="description" content="PSN, Xbox, Nintendo, V-Bucks, Roblox and more. Pay in TT$ with online banking and get your code in minutes. Concept site by Portside Digital.">
+<meta name="theme-color" content="#06050D">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* hero */
+.hero{position:relative;min-height:calc(100svh - 70px);display:grid;align-items:center;overflow:hidden;padding:40px 0 70px}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 50% at 75% 40%,rgba(139,92,246,.35),transparent 70%),radial-gradient(40% 40% at 15% 80%,rgba(34,211,238,.18),transparent 70%);pointer-events:none}
+.floor{position:absolute;left:-50%;right:-50%;bottom:-10%;height:55%;background-image:linear-gradient(rgba(139,92,246,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.35) 1px,transparent 1px);background-size:60px 60px;transform:perspective(500px) rotateX(62deg);transform-origin:50% 0;mask-image:linear-gradient(transparent,#000 30%,#000 60%,transparent);animation:floor 6s linear infinite;opacity:.55}
+@keyframes floor{to{background-position:0 60px,0 0}}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.hero h1{font:900 clamp(36px,4.9vw,68px)/.98 var(--hd);letter-spacing:-.045em}
+.hero h1 .k{display:inline-block}
+.hero .sub{margin-top:24px;max-width:46ch;font-size:clamp(16px,1.6vw,19px);color:var(--mut)}
+.hero .cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.trust{display:flex;gap:26px;margin-top:38px;flex-wrap:wrap}
+.trust div{display:flex;align-items:center;gap:10px;font:600 14px/1.2 var(--bd);color:var(--mut)}
+.trust i{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:rgba(139,92,246,.14);border:1px solid var(--line2);flex:none}
+/* card stack */
+.stage3d{position:relative;height:min(560px,62vw);perspective:1400px}
+.stack{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .2s ease-out}
+.stack .gc{position:absolute;left:50%;top:50%;width:min(360px,62%);margin:0;transform-style:preserve-3d;will-change:transform}
+.stack .gc .nm{font-size:clamp(16px,2vw,24px)}
+.glowring{position:absolute;left:50%;top:56%;width:70%;aspect-ratio:1;transform:translate(-50%,-50%) rotateX(75deg);border-radius:50%;border:2px solid rgba(34,211,238,.5);box-shadow:0 0 60px rgba(34,211,238,.45),inset 0 0 60px rgba(139,92,246,.45);animation:ring 4s ease-in-out infinite}
+@keyframes ring{50%{box-shadow:0 0 90px rgba(34,211,238,.65),inset 0 0 90px rgba(139,92,246,.65)}}
+.codepill{position:absolute;right:2%;bottom:12%;z-index:5;padding:14px 18px;border-radius:16px;background:rgba(18,16,40,.9);border:1px solid var(--line2);backdrop-filter:blur(10px);box-shadow:0 20px 50px rgba(0,0,0,.5);font:600 12px/1.3 var(--mono);color:var(--mut)}
+.codepill b{display:block;margin-top:6px;font:700 18px/1 var(--mono);color:#fff;letter-spacing:.06em}
+.codepill .ok{color:var(--ok)}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.stage3d{height:min(420px,90vw);order:-1}.hero{padding-top:10px}}
+/* search */
+.search{position:relative;margin-top:30px;max-width:520px}
+.search input{width:100%;height:58px;padding:0 20px 0 54px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line2);outline:0;font-size:16px}
+.search input:focus{border-color:var(--vio);box-shadow:0 0 0 4px rgba(139,92,246,.2)}
+.search svg{position:absolute;left:18px;top:18px}
+.sugg{position:absolute;left:0;right:0;top:64px;z-index:20;background:var(--bg2);border:1px solid var(--line2);border-radius:16px;overflow:hidden;display:none;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.sugg a{display:flex;align-items:center;gap:14px;padding:10px 14px}.sugg a:hover,.sugg a.sel{background:rgba(139,92,246,.14)}
+.sugg .gc{width:64px;border-radius:7px;flex:none}.sugg .gc .nm,.sugg .gc .tg,.sugg .gc .chipx,.sugg .gc .val{display:none}.sugg .gc .gl{width:44%;right:28%;top:20%}
+.sugg small{color:var(--mut)}
+/* marquee of platforms */
+.marq{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;background:rgba(255,255,255,.015)}
+.marq .row{display:flex;gap:46px;width:max-content;animation:mq 34s linear infinite}
+.marq span{font:800 22px/1 var(--hd);letter-spacing:-.02em;color:#3A3566;white-space:nowrap}
+.marq span b{color:var(--vio2)}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+.step{position:relative;padding:30px 26px 28px;overflow:hidden}
+.step .n{font:800 64px/1 var(--hd);letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--line2)}
+.step h3{font:800 22px/1.15 var(--hd);margin:14px 0 10px;letter-spacing:-.02em}
+.step p{color:var(--mut)}
+.step .mini{margin-top:20px;padding:14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);font:600 13px/1.5 var(--mono);color:var(--mut)}
+.step .mini b{color:var(--txt)}.step .mini .ok{color:var(--ok)}
+@media (max-width:860px){.steps{grid-template-columns:1fr}}
+/* old vs new */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vs .panel{padding:28px}
+.vs h3{font:800 20px/1.2 var(--hd);margin-bottom:18px}
+.vs ul{list-style:none;display:grid;gap:12px}
+.vs li{display:flex;gap:12px;align-items:flex-start;color:var(--mut)}
+.vs li i{flex:none;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;margin-top:1px}
+.vs .old li i{background:rgba(251,113,133,.15);color:#FB7185}.vs .new li i{background:rgba(52,211,153,.15);color:var(--ok)}
+.vs .new{border-color:rgba(139,92,246,.5);box-shadow:0 30px 60px -30px rgba(139,92,246,.6)}
+@media (max-width:760px){.vs{grid-template-columns:1fr}}
+/* price check */
+.pc{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:center;padding:34px}
+.pc .big{font:900 clamp(54px,8vw,96px)/1 var(--hd);letter-spacing:-.05em}
+.pc .big small{font-size:.32em;color:var(--mut);letter-spacing:0;margin-left:6px}
+.pc input[type=range]{width:100%;accent-color:var(--vio);margin:22px 0 8px}
+.ladder{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.ladder div{padding:12px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);font:600 13px/1.3 var(--mono);color:var(--mut);transition:.2s}
+.ladder div b{display:block;color:var(--txt);font-size:16px}
+.ladder div.on{border-color:var(--vio);background:rgba(139,92,246,.16)}
+@media (max-width:860px){.pc{grid-template-columns:1fr}}
+/* reviews */
+.revs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.rev{padding:22px}
+.rev .st{color:var(--warn);letter-spacing:.12em}
+.rev p{margin:12px 0 16px}
+.rev small{color:var(--mut)}
+@media (max-width:1000px){.revs{grid-template-columns:1fr 1fr}}@media (max-width:600px){.revs{grid-template-columns:1fr}}
+/* gear */
+.gear{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.gi{overflow:hidden}
+.gi .ph{aspect-ratio:4/3;background:#0B0A18 center/cover}
+.gi .b{padding:16px 18px 18px}
+.gi h4{font:700 16px/1.25 var(--bd)}.gi .pr{font:700 15px/1 var(--mono);color:var(--cy);margin-top:8px}
+.gi small{display:block;color:var(--dim);font-size:12px;margin-top:6px}
+@media (max-width:1000px){.gear{grid-template-columns:1fr 1fr}}
+/* final cta */
+.final{position:relative;overflow:hidden;padding:64px 40px;text-align:center;border-radius:32px;background:radial-gradient(80% 120% at 50% 0%,rgba(139,92,246,.45),transparent 70%),var(--panel);border:1px solid var(--line2)}
+.final h2{font:900 clamp(32px,5vw,60px)/1 var(--hd);letter-spacing:-.04em;max-width:16ch;margin:0 auto}
+.final p{color:var(--mut);margin:18px auto 28px;max-width:44ch}
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="floor"></div>
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">● Online · Trinidad & Tobago · Codes in minutes</div>
+        <h1 class="hd" style="margin-top:20px">Game cards.<br><span class="grad">Paid in TT$.</span><br>Codes in minutes.</h1>
+        <p class="sub">PSN, Xbox, Nintendo, V-Bucks, Roblox, Free Fire and more. See your price up front, pay with online banking, and get your code by email and WhatsApp. No DMs, no waiting.</p>
+        <div class="search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9C98C4" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" placeholder="Search a card… try “psn” or “robux”" autocomplete="off" aria-label="Search cards"><div class="sugg" id="sugg"></div></div>
+        <div class="cta"><a class="btn btn-p" href="#cards">Browse all cards <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-g" href="help.html">How it works</a></div>
+        <div class="trust">
+          <div><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></i>Avg. delivery<br>4 minutes</div>
+          <div><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.2"><path d="M3 10h18M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18M12 3l9 5H3z"/></svg></i>Republic, FCB,<br>Scotia, RBC</div>
+          <div><i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2.2"><path d="M12 21s-7-4.5-7-11V5l7-3 7 3v5c0 6.5-7 11-7 11z"/><path d="M9 12l2 2 4-4"/></svg></i>500+ happy<br>gamers</div>
+        </div>
+      </div>
+      <div class="stage3d" id="stage3d">
+        <div class="glowring"></div>
+        <div class="stack" id="stack"></div>
+        <div class="codepill" id="codepill">ORDER NK-4821 · <span class="ok">CODE SENT ✓</span><b id="cp">CE7G-••••-••••</b></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marq"><div class="row" id="marq"></div></div>
+
+  <section id="cards">
+    <div class="wrap">
+      <div class="sh rv"><h2>Pick your card. <span class="grad">Price is the price.</span></h2><p>Every price is in TT$ and already includes everything. What you see is what you transfer.</p></div>
+      <div class="chips rv" id="cats" style="margin-bottom:24px"></div>
+      <div class="tiles" id="tiles"></div>
+    </div>
+  </section>
+
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="sh rv"><h2>Three steps. <span class="grad">Zero DMs.</span></h2><p>The same online-banking payment you already use. It's just faster, and your order is tracked the whole way.</p></div>
+      <div class="steps">
+        <div class="step panel rv"><div class="n">01</div><h3>Pick a card & amount</h3><p>Choose your platform and value. The TT$ price shows instantly. No “DM for price”.</p><div class="mini">PSN · US$50 → <b>TT$410</b></div></div>
+        <div class="step panel rv"><div class="n">02</div><h3>Pay with online banking</h3><p>Transfer from your bank app using your order reference, then upload the screenshot right on the site.</p><div class="mini">Ref <b>NK-4821</b> · Republic · <span class="ok">slip uploaded ✓</span></div></div>
+        <div class="step panel rv"><div class="n">03</div><h3>Get your code</h3><p>Once the payment is verified, your code lands on your order page, by email and on WhatsApp, with redeem steps.</p><div class="mini">Code sent · <b>4 min</b> · <span class="ok">redeemed ✓</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="panel pc rv">
+        <div>
+          <div class="eyebrow">Price check</div>
+          <h2 class="hd" style="font-size:clamp(26px,3.4vw,40px);margin:12px 0 18px">How much is a card in TT$?</h2>
+          <div class="muted" id="pcLabel">US$50 card</div>
+          <div class="big" id="pcBig">TT$410</div>
+          <input type="range" id="pcR" min="0" max="16" value="8" aria-label="Card value">
+          <div class="muted" style="font-size:14px">Applies to PSN, Xbox, Nintendo, Roblox, Apple, Amazon and more.</div>
+        </div>
+        <div class="ladder" id="ladder"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sh rv"><h2>No more <span class="grad">“DM for price”</span></h2><p>Your customers already trust you. This just takes the back-and-forth out of every single sale.</p></div>
+      <div class="vs">
+        <div class="panel old rv"><h3>Ordering through DMs</h3><ul>
+          <li><i>✕</i>Customer DMs, waits for a reply to get the price</li><li><i>✕</i>Prices are hidden inside flyer images</li><li><i>✕</i>Payment screenshots get lost in the chat</li><li><i>✕</i>Every code is copied and sent by hand, late at night</li><li><i>✕</i>No record of who bought what</li></ul></div>
+        <div class="panel new rv"><h3>Ordering on NeonKey</h3><ul>
+          <li><i>✓</i>Every price is public and searchable, 24/7</li><li><i>✓</i>A unique payment reference on every order</li><li><i>✓</i>The slip is uploaded and attached to the order</li><li><i>✓</i>Verify the payment, and the code is sent in one tap</li><li><i>✓</i>Order history, stock and sales in one dashboard</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sh rv"><h2>Gaming gear. <span class="grad">Delivered.</span></h2><p>Controllers, headsets and more, delivered anywhere in Trinidad. Reserve with a 25% deposit and pay the rest on delivery.</p></div>
+      <div class="gear" id="gear"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sh rv"><h2>Real gamers. <span class="grad">Real codes.</span></h2><p>4.9 average from 500+ orders across Trinidad & Tobago.</p></div>
+      <div class="revs" id="revs"></div>
+    </div>
+  </section>
+
+  <section style="padding-bottom:40px">
+    <div class="wrap"><div class="final rv">
+      <div class="eyebrow">Ready, player one?</div>
+      <h2 style="margin-top:16px">Your next code is <span class="grad">4 minutes away.</span></h2>
+      <p>Pick a card, pay with online banking, play tonight.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn btn-p" href="#cards">Shop cards</a><a class="btn btn-g" href="track.html">Track an order</a></div>
+    </div></div>
+  </section>
+</main>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+shell('Store');
+// ---- 3D card stack: cycles, tilts with the pointer ----
+const STACK = ['psn', 'vbucks', 'xbox', 'roblox', 'nintendo'].map(byId);
+const VAL = ['US$50', '2,800', 'US$25', 'US$25', 'US$35'];
+$('#stack').innerHTML = STACK.map((c, i) => cardArt(c, VAL[i], 'NEONKEY · DIGITAL')).join('');
+const cards = $$('#stack .gc'); let front = 0;
+function layout() {
+  cards.forEach((el, i) => {
+    const k = (i - front + cards.length) % cards.length;
+    const t = k === 0 ? 'translate(-50%,-62%) translateZ(120px) rotateY(-14deg) rotateX(8deg) rotateZ(-4deg)'
+      : `translate(${-50 + k * 9}%,${-56 + k * 5}%) translateZ(${-k * 70}px) rotateY(-22deg) rotateX(10deg) rotateZ(${4 + k * 3}deg)`;
+    el.style.transition = 'transform .9s cubic-bezier(.2,.8,.2,1), filter .9s';
+    el.style.transform = t; el.style.zIndex = 10 - k; el.style.filter = `brightness(${1 - k * .14}) saturate(${1 - k * .08})`;
+  });
+}
+layout(); setInterval(() => { front = (front + 1) % cards.length; layout(); }, 2600);
+const st = $('#stage3d');
+st.addEventListener('pointermove', e => { const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; $('#stack').style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 14}deg)`; });
+st.addEventListener('pointerleave', () => $('#stack').style.transform = '');
+// code pill "types" a code
+const CODES = ['CE7G-TKNT-NACK', '7RQX-9KD2-LMP4', 'XB4N-2H7Q-PW9Z', 'RBX-8842-5531'];
+let cpi = 0; setInterval(() => { const c = CODES[cpi++ % CODES.length]; let n = 0; const el = $('#cp'); const iv = setInterval(() => { el.textContent = c.slice(0, n) + c.slice(n).replace(/[A-Z0-9]/g, '•'); if (n++ > c.length) clearInterval(iv); }, 45); }, 3200);
+// marquee
+const M = CARDS.map(c => `<span>${c.short} <b>✦</b></span>`).join('');
+$('#marq').innerHTML = M + M;
+// tiles + filters
+let cat = 'all';
+function tiles() {
+  $('#tiles').innerHTML = CARDS.filter(c => cat === 'all' || c.cat === cat).map(c => `<a class="tile" href="card.html?id=${c.id}">${c.hot ? '<span class="hot">HOT</span>' : ''}${cardArt(c)}<div class="meta"><h3>${c.name}</h3><span class="from">from <b>${tt(fromPrice(c))}</b></span></div><div class="rg">${c.region} · ${c.denoms.length} amounts</div></a>`).join('');
+}
+$('#cats').innerHTML = CATS.map(([k, t]) => `<button class="chip ${k === cat ? 'on' : ''}" data-c="${k}">${t}</button>`).join('');
+$$('#cats .chip').forEach(b => b.onclick = () => { cat = b.dataset.c; $$('#cats .chip').forEach(x => x.classList.toggle('on', x === b)); tiles(); });
+tiles();
+// search
+const q = $('#q'), sg = $('#sugg');
+const ALIAS = { robux: 'roblox', ps: 'psn', playstation: 'psn', ps5: 'psn', ps4: 'psn', switch: 'nintendo', fortnite: 'vbucks', vbucks: 'vbucks', 'v-bucks': 'vbucks', diamonds: 'freefire', itunes: 'apple', 'game pass': 'xbox', pubg: 'razer', valorant: 'razer' };
+q.oninput = () => {
+  const s = q.value.trim().toLowerCase(); if (!s) { sg.style.display = 'none'; return; }
+  const hit = CARDS.filter(c => (c.name + ' ' + c.short + ' ' + c.id).toLowerCase().includes(s) || Object.entries(ALIAS).some(([a, id]) => a.startsWith(s) && id === c.id));
+  sg.innerHTML = hit.length ? hit.map((c, i) => `<a href="card.html?id=${c.id}" class="${i ? '' : 'sel'}">${cardArt(c)}<div><b>${c.name}</b><br><small>from ${tt(fromPrice(c))} · ${c.region}</small></div></a>`).join('') : '<div style="padding:16px;color:#9C98C4">No card found. Message us on WhatsApp and we\'ll source it.</div>';
+  sg.style.display = 'block';
+};
+q.onkeydown = e => { if (e.key === 'Enter') { const a = $('a', sg); if (a) location.href = a.href; } };
+document.addEventListener('click', e => { if (!e.target.closest('.search')) sg.style.display = 'none'; });
+// price check slider
+const LV = Object.entries({ 10: 90, 15: 135, 20: 180, 25: 220, 30: 255, 35: 285, 40: 350, 45: 380, 50: 410, 60: 465, 65: 510, 70: 540, 75: 580, 80: 610, 90: 700, 99: 755, 100: 760 });
+$('#ladder').innerHTML = LV.map(([u, t]) => `<div>US$${u}<b>${tt(t)}</b></div>`).join('');
+function pc() { const [u, t] = LV[$('#pcR').value]; $('#pcLabel').textContent = `US$${u} card`; $('#pcBig').innerHTML = `TT$${(+t).toLocaleString()}`; $$('#ladder div').forEach((d, i) => d.classList.toggle('on', i == $('#pcR').value)); }
+$('#pcR').oninput = pc; pc();
+// gear (photos: Unsplash)
+const GEAR = [['Wireless controller', 'TT$495', 'photo-1592840496694-26d035b52b48'], ['Gaming headset', 'TT$380', 'photo-1599669454699-248893623440'], ['RGB keyboard', 'TT$420', 'photo-1587829741301-dc798b83add3'], ['Gaming mouse', 'TT$260', 'photo-1527814050087-3793815479db']];
+$('#gear').innerHTML = GEAR.map(([n, p, id]) => `<div class="gi panel rv"><div class="ph" style="background-image:url(https://images.unsplash.com/${id}?auto=format&fit=crop&w=700&q=70)"></div><div class="b"><h4>${n}</h4><div class="pr">${p}</div><small>Reserve with 25% · cash or transfer on delivery</small></div></div>`).join('');
+// reviews
+$('#revs').innerHTML = REVIEWS.map(([t, n, p]) => `<div class="rev panel rv"><div class="st">★★★★★</div><p>“${t}”</p><small><b style="color:#EDEBFF">${n}</b> · ${p}</small></div>`).join('');
+reveals();
+</script>
+</body>
+</html>

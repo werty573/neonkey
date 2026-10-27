@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout · NeonKey</title>
+<meta name="theme-color" content="#06050D">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.co{display:grid;grid-template-columns:1.25fr .75fr;gap:30px;padding:36px 0 80px;align-items:start}
+h1{font:800 clamp(28px,3.6vw,42px)/1 var(--hd);letter-spacing:-.035em}
+.prog{display:flex;gap:8px;margin:22px 0 26px}
+.prog div{flex:1;display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:13px;background:var(--panel);border:1px solid var(--line);font:600 14px/1 var(--bd);color:var(--dim)}
+.prog i{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:rgba(255,255,255,.06);font:800 12px/1 var(--mono);font-style:normal}
+.prog .on{color:var(--txt);border-color:var(--vio)}.prog .on i{background:var(--vio)}
+.prog .done{color:var(--mut)}.prog .done i{background:var(--ok);color:#052}
+.stp{display:none;padding:28px}.stp.on{display:block}
+.stp h2{font:800 22px/1.2 var(--hd);margin-bottom:6px}.stp>p{color:var(--mut);margin-bottom:22px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pm{display:grid;gap:10px;margin-bottom:22px}
+.opt{display:flex;gap:14px;align-items:center;padding:16px 18px;border-radius:16px;background:var(--bg2);border:1.5px solid var(--line);text-align:left;transition:.18s}
+.opt.on{border-color:var(--vio);background:rgba(139,92,246,.12)}
+.opt .rd{width:20px;height:20px;border-radius:50%;border:2px solid var(--line2);flex:none;display:grid;place-items:center}
+.opt.on .rd{border-color:var(--vio)}.opt.on .rd::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--vio)}
+.opt b{display:block}.opt small{color:var(--mut)}
+.opt .tagx{margin-left:auto;padding:5px 9px;border-radius:8px;background:rgba(52,211,153,.15);color:var(--ok);font:700 11px/1 var(--mono);letter-spacing:.08em}
+.banks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.acct{padding:18px;border-radius:16px;background:var(--bg2);border:1px dashed var(--line2);display:grid;gap:10px}
+.acct .r{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:15px}
+.acct .r span{color:var(--mut)}.acct .r b{font:700 15px/1 var(--mono)}
+.cp{padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.06);font:600 12px/1 var(--bd);color:var(--vio2);margin-left:8px}
+.ref{font:800 22px/1 var(--mono)!important;color:var(--cy)}
+.drop{margin-top:18px;display:flex;align-items:center;gap:16px;padding:18px;border-radius:16px;border:1.5px dashed var(--line2);background:rgba(255,255,255,.02);cursor:pointer;transition:.2s}
+.drop:hover,.drop.over{border-color:var(--vio);background:rgba(139,92,246,.08)}
+.drop .th{width:64px;height:64px;border-radius:12px;background:var(--panel) center/cover;flex:none;display:grid;place-items:center}
+.drop b{display:block}.drop small{color:var(--mut)}
+.drop.ok{border-style:solid;border-color:var(--ok);background:rgba(52,211,153,.06)}
+.chk{display:flex;gap:12px;align-items:flex-start;margin-top:18px;font-size:14px;color:var(--mut)}
+.chk input{width:20px;height:20px;accent-color:var(--vio);margin-top:1px}
+.nav2{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.sum{position:sticky;top:96px;padding:24px}
+.sum h3{font:800 18px/1 var(--hd);margin-bottom:16px}
+.sl{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.sl .gc{border-radius:8px}.sl .gc .nm,.sl .gc .tg,.sl .gc .chipx,.sl .gc .val{display:none}.sl .gc .gl{width:44%;right:28%;top:20%}
+.sl small{color:var(--mut)}.sl b{font:700 14px/1 var(--mono)}
+.sum .tot{margin-top:18px}
+.sum .perk{display:grid;gap:8px;margin-top:18px;font-size:13px;color:var(--mut)}
+.card-f{display:grid;gap:14px}
+@media (max-width:900px){.co{grid-template-columns:1fr}.sum{position:static;order:-1}.g2{grid-template-columns:1fr}.prog div span{display:none}}
+</style>
+</head>
+<body data-noticker="1">
+<main class="wrap">
+  <div class="co">
+    <div>
+      <h1>Checkout</h1>
+      <div class="prog" id="prog"><div class="on"><i>1</i><span>Your details</span></div><div><i>2</i><span>Payment</span></div><div><i>3</i><span>Confirm</span></div></div>
+      <div class="stp panel on" id="s1">
+        <h2>Where should we send your code?</h2><p>Your code goes to your order page, your email and your WhatsApp.</p>
+        <div class="g2">
+          <div class="field" id="fN"><label for="nm">Full name</label><input id="nm" autocomplete="name" placeholder="Kyle Baptiste"><span class="err">Please enter your name</span></div>
+          <div class="field" id="fW"><label for="wa">WhatsApp number</label><input id="wa" inputmode="tel" autocomplete="tel" placeholder="868 555 0142"><span class="err">Enter a 7-digit T&T number</span></div>
+          <div class="field" id="fE" style="grid-column:1/-1"><label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@email.com"><span class="err">Enter a valid email</span></div>
+        </div>
+        <div class="nav2"><a class="btn btn-g" href="index.html#cards">← Keep shopping</a><button class="btn btn-p" id="to2">Continue to payment</button></div>
+      </div>
+      <div class="stp panel" id="s2">
+        <h2>How would you like to pay?</h2><p>Most customers pay with online or mobile banking. It takes about 2 minutes.</p>
+        <div class="pm" id="pm">
+          <button class="opt on" data-m="bank"><span class="rd"></span><div><b>Online / mobile banking</b><small>Transfer from your bank app and upload the slip</small></div><span class="tagx">FASTEST</span></button>
+          <button class="opt" data-m="card"><span class="rd"></span><div><b>Debit or credit card</b><small>Secure card payment via WiPay (TT$)</small></div></button>
+          <button class="opt" data-m="wa"><span class="rd"></span><div><b>Order on WhatsApp</b><small>Send the order to us and pay after we confirm</small></div></button>
+        </div>
+        <div id="pBank">
+          <div class="banks chips" id="banks"></div>
+          <div class="acct" id="acct"></div>
+          <label class="drop" id="drop"><input type="file" id="slip" accept="image/*,.pdf" hidden><div class="th" id="th"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg></div><div><b id="dT">Upload your proof of payment</b><small id="dS">Screenshot or PDF of the transfer · it's attached to your order</small></div></label>
+          <label class="chk"><input type="checkbox" id="sent"> I've sent the transfer using the reference above. I understand digital codes can't be refunded once they're sent.</label>
+        </div>
+        <div id="pCard" style="display:none"><div class="card-f">
+          <div class="field"><label>Card number</label><input placeholder="4242 4242 4242 4242" inputmode="numeric"></div>
+          <div class="g2"><div class="field"><label>Expiry</label><input placeholder="MM / YY"></div><div class="field"><label>CVC</label><input placeholder="123"></div></div>
+          <div class="note" style="display:flex;gap:10px;padding:14px;border-radius:14px;background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.3);font-size:14px;color:#FDE68A">Concept demo: no card is charged. In the live store this is a WiPay checkout, and the code is released automatically once the card payment clears.</div>
+        </div></div>
+        <div id="pWa" style="display:none"><p class="muted">We'll open WhatsApp with your full order written out. Your order still gets a reference so you can track it here.</p></div>
+        <div class="nav2"><button class="btn btn-g" id="back1">← Back</button><button class="btn btn-p" id="to3">Review order</button></div>
+      </div>
+      <div class="stp panel" id="s3">
+        <h2>Confirm & place order</h2><p>Check everything below. Your code will be sent to <b id="cTo"></b>.</p>
+        <div id="rev" class="acct" style="border-style:solid"></div>
+        <div class="nav2"><button class="btn btn-g" id="back2">← Back</button><button class="btn btn-p" id="place">Place order · <span id="pTot"></span></button></div>
+      </div>
+    </div>
+    <aside class="sum panel"><h3>Order summary</h3><div id="lines"></div><div class="tot"><span>Total</span><span id="tot"></span></div>
+      <div class="perk"><span>⚡ Codes usually arrive in under 5 minutes</span><span>🔒 Your payment slip is only seen by NeonKey</span><span>💬 Help on WhatsApp 8 AM to midnight, every day</span></div></aside>
+  </div>
+</main>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+shell('');
+const lines = Cart.lines();
+if (!lines.length) { $('main').innerHTML = `<div class="empty" style="padding:120px 0"><h2 class="hd" style="font-size:32px;color:#EDEBFF">Your cart is empty</h2><p style="margin:14px 0 24px">Pick a card first, then come back here.</p><a class="btn btn-p" href="index.html#cards">Browse cards</a></div>`; }
+else {
+const ID = newOrderId();
+let step = 1, method = 'bank', bank = 0, slipName = '', slipURL = '';
+const BANKS = [['Republic Bank', '0-4321-8876-501'], ['First Citizens', '2193-4471-0028'], ['Scotiabank', '1520-77-30419'], ['RBC Royal Bank', '100-554-209-81']];
+$('#lines').innerHTML = lines.map(l => `<div class="sl">${cardArt(l.c)}<div><div style="font-weight:700;font-size:14px">${l.qty} × ${l.c.short}</div><small>${l.d.label}</small></div><b>${tt(l.sum)}</b></div>`).join('');
+$('#tot').textContent = tt(Cart.total()); $('#pTot').textContent = tt(Cart.total());
+try { const p = JSON.parse(localStorage.getItem('nk_me') || '{}'); if (p.n) { $('#nm').value = p.n; $('#wa').value = p.w; $('#em').value = p.e; } } catch {}
+function go(n) {
+  step = n; $$('.stp').forEach((s, i) => s.classList.toggle('on', i === n - 1));
+  $$('#prog div').forEach((d, i) => { d.className = i < n - 1 ? 'done' : i === n - 1 ? 'on' : ''; d.querySelector('i').textContent = i < n - 1 ? '✓' : i + 1; });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function v(id, ok) { $(id).classList.toggle('bad', !ok); return ok; }
+$('#to2').onclick = () => {
+  const a = v('#fN', $('#nm').value.trim().length > 1), b = v('#fW', /^\d{7}$/.test($('#wa').value.replace(/\D/g, '').slice(-7)) && $('#wa').value.replace(/\D/g, '').length >= 7), c = v('#fE', /^\S+@\S+\.\S+$/.test($('#em').value.trim()));
+  if (a && b && c) { try { localStorage.setItem('nk_me', JSON.stringify({ n: $('#nm').value.trim(), w: $('#wa').value.trim(), e: $('#em').value.trim() })); } catch {} go(2); }
+};
+$$('#pm .opt').forEach(o => o.onclick = () => { method = o.dataset.m; $$('#pm .opt').forEach(x => x.classList.toggle('on', x === o)); $('#pBank').style.display = method === 'bank' ? '' : 'none'; $('#pCard').style.display = method === 'card' ? '' : 'none'; $('#pWa').style.display = method === 'wa' ? '' : 'none'; });
+function acct() {
+  $('#banks').innerHTML = BANKS.map((b, i) => `<button class="chip ${i === bank ? 'on' : ''}" data-b="${i}">${b[0]}</button>`).join('');
+  $$('#banks .chip').forEach(b => b.onclick = () => { bank = +b.dataset.b; acct(); });
+  $('#acct').innerHTML = `<div class="r"><span>Pay to</span><b>NeonKey Digital</b></div><div class="r"><span>${BANKS[bank][0]} · Chequing</span><b>${BANKS[bank][1]}<button class="cp" data-cp="${BANKS[bank][1]}">Copy</button></b></div>
+    <div class="r"><span>Amount</span><b>${tt(Cart.total())}<button class="cp" data-cp="${Cart.total()}">Copy</button></b></div><div class="r"><span>Reference <small style="display:block;color:#6E6A98">put this in the transfer note</small></span><b class="ref">${ID}<button class="cp" data-cp="${ID}">Copy</button></b></div>`;
+  $$('.cp').forEach(b => b.onclick = e => { e.preventDefault(); navigator.clipboard?.writeText(b.dataset.cp).catch(() => {}); b.textContent = 'Copied ✓'; setTimeout(() => b.textContent = 'Copy', 1400); });
+}
+acct();
+function setSlip(f) { if (!f) return; slipName = f.name; const r = new FileReader(); r.onload = () => { slipURL = f.type.startsWith('image/') ? r.result : ''; $('#th').style.backgroundImage = slipURL ? `url(${slipURL})` : ''; if (slipURL) $('#th').innerHTML = ''; }; r.readAsDataURL(f); $('#drop').classList.add('ok'); $('#dT').textContent = 'Slip attached ✓'; $('#dS').textContent = f.name; }
+$('#slip').onchange = e => setSlip(e.target.files[0]);
+['dragover', 'dragenter'].forEach(ev => $('#drop').addEventListener(ev, e => { e.preventDefault(); $('#drop').classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev => $('#drop').addEventListener(ev, e => { e.preventDefault(); $('#drop').classList.remove('over'); if (ev === 'drop') setSlip(e.dataTransfer.files[0]); }));
+$('#back1').onclick = () => go(1); $('#back2').onclick = () => go(2);
+$('#to3').onclick = () => {
+  if (method === 'bank' && !$('#sent').checked) { toast('Tick the box once you\'ve sent the transfer'); return; }
+  const M = { bank: `Online banking · ${BANKS[bank][0]}${slipName ? ' · slip attached' : ' · slip to follow'}`, card: 'Card via WiPay', wa: 'Order on WhatsApp' };
+  $('#cTo').textContent = `${$('#em').value.trim()} and WhatsApp ${$('#wa').value.trim()}`;
+  $('#rev').innerHTML = lines.map(l => `<div class="r"><span>${l.qty} × ${l.c.name} ${l.d.label}</span><b>${tt(l.sum)}</b></div>`).join('') + `<div class="r"><span>Payment</span><b style="font-family:Inter">${M[method]}</b></div><div class="r"><span>Reference</span><b class="ref">${ID}</b></div>`;
+  go(3);
+};
+$('#place').onclick = () => {
+  const o = { id: ID, t: Date.now(), name: $('#nm').value.trim(), wa: $('#wa').value.trim(), email: $('#em').value.trim(), method, bank: BANKS[bank][0], slip: slipName, slipURL: (slipURL || '').length < 400000 ? slipURL : '',
+    items: lines.map(l => ({ id: l.id, value: l.value, qty: l.qty, label: l.d.label, ttd: l.d.ttd })), total: Cart.total(), status: method === 'wa' ? 'placed' : 'paid', ffid: localStorage.getItem('nk_ffid') || '', auto: true };
+  Orders.save(o);
+  if (method === 'wa') window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Hi NeonKey! Order ${ID}\n` + lines.map(l => `• ${l.qty} × ${l.c.name} ${l.d.label}: ${tt(l.sum)}`).join('\n') + `\nTotal: ${tt(Cart.total())}\nName: ${o.name}`)}`, '_blank');
+  Cart.set([]); location.href = `track.html?o=${ID}`;
+};
+}
+</script>
+</body>
+</html>

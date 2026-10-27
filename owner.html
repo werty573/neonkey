@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Owner view · NeonKey</title>
+<meta name="theme-color" content="#06050D">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.ow{padding:34px 0 80px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+h1{font:800 clamp(26px,3.4vw,40px)/1 var(--hd);letter-spacing:-.035em}
+.demo{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#FDE68A;font:600 13px/1.3 var(--bd)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}
+.kpi{padding:20px}.kpi small{color:var(--mut);font-size:13px}.kpi b{display:block;font:800 30px/1 var(--hd);letter-spacing:-.03em;margin-top:10px}
+.kpi .d{font:600 12px/1 var(--mono);color:var(--ok);margin-top:8px}.kpi.hl{border-color:rgba(251,191,36,.4);background:linear-gradient(180deg,rgba(251,191,36,.08),var(--panel))}.kpi.hl b{color:var(--warn)}
+.grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;align-items:start}
+.box{padding:22px}.box h2{font:800 18px/1 var(--hd);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.tabs{display:flex;gap:6px}.tabs button{padding:8px 12px;border-radius:9px;font:600 13px/1 var(--bd);color:var(--mut)}.tabs button.on{background:rgba(139,92,246,.18);color:#fff}
+.ord{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);margin-bottom:10px;transition:background .4s,border-color .4s}
+.ord.new{border-color:var(--warn);background:rgba(251,191,36,.07)}
+.ord .sl{width:52px;height:52px;border-radius:10px;background:#1A1736 center/cover;display:grid;place-items:center;font:700 10px/1.1 var(--mono);color:var(--dim);text-align:center;cursor:pointer;border:1px solid var(--line2)}
+.ord .r1{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ord .id{font:700 14px/1 var(--mono);color:var(--cy)}
+.ord .who{font-weight:700}.ord small{color:var(--mut);font-size:13px}
+.pill{padding:5px 9px;border-radius:8px;font:700 11px/1 var(--mono);letter-spacing:.06em}
+.pill.w{background:rgba(251,191,36,.14);color:var(--warn)}.pill.s{background:rgba(52,211,153,.14);color:var(--ok)}.pill.v{background:rgba(139,92,246,.18);color:var(--vio2)}
+.ord .act{text-align:right}.ord .act b{display:block;font:700 15px/1 var(--mono);margin-bottom:8px}
+.stock{display:grid;gap:12px}
+.sk .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-weight:700;font-size:14px}
+.sk .d{display:flex;gap:6px;flex-wrap:wrap}
+.sk .d span{padding:6px 9px;border-radius:9px;background:var(--bg2);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--mut)}
+.sk .d span b{color:var(--txt)}.sk .d span.low{border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.08);color:#FDA4AF}.sk .d span.low b{color:#FB7185}
+.chart{display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:10px}
+.chart div{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;font:600 11px/1 var(--mono);color:var(--dim);height:100%;justify-content:flex-end}
+.chart i{width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--vio),rgba(139,92,246,.25));transition:height .8s cubic-bezier(.2,.8,.2,1)}
+.chart div:last-child i{background:linear-gradient(180deg,var(--cy),rgba(34,211,238,.25))}
+.best{display:grid;gap:8px;margin-top:16px}.best div{display:flex;justify-content:space-between;font-size:14px;color:var(--mut)}.best b{color:var(--txt);font-family:var(--mono)}
+.modal{position:fixed;inset:0;z-index:95;display:none;place-items:center;padding:20px;background:rgba(3,2,10,.7);backdrop-filter:blur(6px)}
+.modal.on{display:grid}
+.mbox{width:min(460px,100%);max-height:90vh;overflow:auto;padding:24px;border-radius:22px;background:var(--bg2);border:1px solid var(--line2)}
+.mbox h3{font:800 20px/1.1 var(--hd);margin-bottom:14px}
+.fslip{border-radius:16px;background:#fff;color:#1b1b1b;padding:20px;font-size:14px}
+.fslip .bk{font:800 16px/1 var(--bd);color:#B4123A;margin-bottom:12px}
+.fslip .r{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee}.fslip .r b{font-family:var(--mono)}
+.match{display:grid;gap:6px;margin:14px 0;font:600 14px/1.3 var(--bd);color:var(--ok)}
+@media (max-width:1000px){.grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.ord{grid-template-columns:auto 1fr}.ord .act{grid-column:1/-1;text-align:left;display:flex;justify-content:space-between;align-items:center}.ord .act b{margin:0}}
+</style>
+</head>
+<body data-noticker="1">
+<main class="wrap ow">
+  <div class="top"><div><div class="eyebrow">Owner view</div><h1 style="margin-top:12px">Good evening 👋</h1></div><span class="demo">Concept demo · this is what the owner sees after logging in</span></div>
+  <div class="kpis">
+    <div class="kpi panel"><small>Sales today</small><b id="kS"></b><div class="d">▲ 18% vs last Monday</div></div>
+    <div class="kpi panel"><small>Orders today</small><b id="kO"></b><div class="d" id="kOd"></div></div>
+    <div class="kpi panel"><small>Avg. time to code</small><b>4m 12s</b><div class="d">▼ from 47 min on DMs</div></div>
+    <div class="kpi panel hl"><small>Waiting for you</small><b id="kW"></b><div class="d" style="color:#FBBF24">payments to verify</div></div>
+  </div>
+  <div class="grid">
+    <div class="box panel"><h2>Orders <span class="tabs" id="tabs"><button class="on" data-f="todo">To verify</button><button data-f="all">All</button></span></h2><div id="list"></div></div>
+    <div style="display:grid;gap:16px">
+      <div class="box panel"><h2>Code stock <button class="btn btn-g btn-sm" id="addC">+ Add codes</button></h2><div class="stock" id="stock"></div></div>
+      <div class="box panel"><h2>Last 7 days</h2><div class="chart" id="chart"></div><div class="best" id="best"></div></div>
+    </div>
+  </div>
+</main>
+<div class="modal" id="mSlip"><div class="mbox"><h3>Payment slip</h3><div id="slipBody"></div><div style="display:flex;gap:10px;margin-top:16px"><button class="btn btn-g" style="flex:1" data-close>Close</button><button class="btn btn-p" style="flex:1.4" id="slipGo">Verify & send code</button></div></div></div>
+<div class="modal" id="mAdd"><div class="mbox"><h3>Add codes to stock</h3>
+  <div class="field"><label>Card</label><select id="aCard"></select></div><div class="field" style="margin-top:12px"><label>Amount</label><select id="aVal"></select></div>
+  <div class="field" style="margin-top:12px"><label>Paste codes (one per line)</label><textarea id="aCodes" rows="5" placeholder="XXXX-XXXX-XXXX&#10;XXXX-XXXX-XXXX"></textarea></div>
+  <div style="display:flex;gap:10px;margin-top:16px"><button class="btn btn-g" style="flex:1" data-close>Cancel</button><button class="btn btn-p" style="flex:1.4" id="aGo">Add to stock</button></div></div></div>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+shell('');
+const NAMES = ['Kyle Baptiste', 'Shania Mohammed', 'Jaden Ali', 'Aaliyah Charles', 'Marcus Joseph', 'Renee Ramdeen', 'Josiah Phillip', 'Kezia Thomas', 'Andre Lewis', 'Tariq Khan'];
+const BANKS = ['Republic Bank', 'First Citizens', 'Scotiabank', 'RBC Royal Bank'];
+const now = Date.now();
+function fake(i, mins, status) {
+  const c = CARDS[(i * 5 + 2) % CARDS.length], d = c.denoms[(i * 3) % c.denoms.length];
+  return { id: 'NK-' + (4700 + i * 13), t: now - mins * 60000, name: NAMES[i % NAMES.length], wa: '868 555 01' + (10 + i), method: 'bank', bank: BANKS[i % 4], slip: 'transfer.jpg', items: [{ id: c.id, value: d.value, qty: 1, label: d.label, ttd: d.ttd }], total: d.ttd, status, seed: true };
+}
+let SEED = [fake(1, 2, 'paid'), fake(2, 6, 'paid'), fake(3, 19, 'sent'), fake(4, 33, 'sent'), fake(5, 51, 'sent'), fake(6, 74, 'sent'), fake(7, 102, 'sent'), fake(8, 140, 'sent')];
+const STOCK = {}; CARDS.forEach((c, i) => c.denoms.forEach((d, j) => STOCK[c.id + '|' + d.value] = (i * 7 + j * 5) % 11 + (j % 3 === 0 ? 1 : 4)));
+let filter = 'todo', fresh = new Set(), slipFor = null;
+const mine = () => Orders.all().map(o => ({ ...o, mine: true }));
+const all = () => [...mine(), ...SEED].sort((a, b) => b.t - a.t);
+const todo = o => o.status === 'paid' || o.status === 'placed';
+function ago(t) { const m = Math.round((Date.now() - t) / 60000); return m < 1 ? 'just now' : m < 60 ? m + ' min ago' : Math.floor(m / 60) + ' h ago'; }
+function render() {
+  const A = all(), T = A.filter(todo);
+  $('#kS').textContent = tt(A.filter(o => o.status === 'sent' || o.status === 'verified').reduce((s, o) => s + o.total, 0) + 6240);
+  $('#kO').textContent = A.length + 23; $('#kOd').textContent = `${A.filter(o => Date.now() - o.t < 3600000).length} in the last hour`;
+  $('#kW').textContent = T.length;
+  const L = filter === 'todo' ? T : A;
+  $('#list').innerHTML = L.length ? L.map(o => { const c = byId(o.items[0].id), more = o.items.length - 1;
+    return `<div class="ord ${fresh.has(o.id) ? 'new' : ''}"><div class="sl" data-slip="${o.id}" style="${o.slipURL ? `background-image:url(${o.slipURL})` : ''}">${o.slipURL ? '' : o.slip ? 'SLIP<br>VIEW' : '—'}</div>
+      <div><div class="r1"><span class="id">${o.id}</span><span class="pill ${todo(o) ? 'w' : o.status === 'verified' ? 'v' : 's'}">${todo(o) ? 'VERIFY' : o.status === 'verified' ? 'SENDING' : 'CODE SENT'}</span>${o.mine ? '<span class="pill v">FROM THIS DEVICE</span>' : ''}</div>
+      <div class="who" style="margin-top:6px">${o.name}</div><small>${o.items[0].qty} × ${c.short} ${o.items[0].label}${more ? ` + ${more} more` : ''} · ${o.method === 'bank' ? o.bank : o.method} · ${ago(o.t)}</small></div>
+      <div class="act"><b>${tt(o.total)}</b>${todo(o) ? `<button class="btn btn-p btn-sm" data-go="${o.id}">Verify & send</button>` : `<small>✓ ${o.wa ? 'WhatsApp + email' : 'email'}</small>`}</div></div>`; }).join('')
+    : `<div class="empty" style="padding:40px 10px">All caught up. No payments waiting. 🎉</div>`;
+  $$('[data-go]').forEach(b => b.onclick = () => send(b.dataset.go));
+  $$('[data-slip]').forEach(b => b.onclick = () => openSlip(b.dataset.slip));
+  // stock
+  $('#stock').innerHTML = CARDS.slice(0, 7).map(c => `<div class="sk"><div class="h"><span>${c.name}</span><small class="muted">${c.denoms.reduce((s, d) => s + STOCK[c.id + '|' + d.value], 0)} codes</small></div><div class="d">${c.denoms.slice(0, 6).map(d => { const n = STOCK[c.id + '|' + d.value]; return `<span class="${n < 3 ? 'low' : ''}">${d.label.replace('US', '').replace(' V-Bucks', 'V').replace(' Diamonds', '💎')} <b>${n}</b></span>`; }).join('')}</div></div>`).join('');
+}
+function find(id) { return all().find(o => o.id === id); }
+function send(id) {
+  const o = find(id); if (!o) return;
+  o.items.forEach(it => { const k = it.id + '|' + it.value; if (STOCK[k] != null) STOCK[k] = Math.max(0, STOCK[k] - it.qty); });
+  if (o.mine) { const m = Orders.get(id); m.status = 'sent'; m.sentAt = Date.now(); m.auto = false; Orders.save(m); }
+  else SEED = SEED.map(x => x.id === id ? { ...x, status: 'sent' } : x);
+  fresh.delete(id); closeM(); render();
+  toast(`<span style="color:#34D399">✓</span> Code sent to ${o.name.split(' ')[0]} on WhatsApp + email`);
+}
+function openSlip(id) {
+  const o = find(id); slipFor = id;
+  $('#slipBody').innerHTML = (o.slipURL ? `<img src="${o.slipURL}" style="border-radius:14px;width:100%">` : `<div class="fslip"><div class="bk">${o.bank} · Transfer confirmation</div>
+    <div class="r"><span>Amount</span><b>${tt(o.total)}</b></div><div class="r"><span>To</span><b>NeonKey Digital</b></div><div class="r"><span>Reference</span><b>${o.id}</b></div><div class="r"><span>Date</span><b>${new Date(o.t).toLocaleString('en-TT', { dateStyle: 'medium', timeStyle: 'short' })}</b></div><div class="r" style="border:0"><span>Status</span><b style="color:#118a3e">Completed</b></div></div>`)
+    + `<div class="match"><span>✓ Amount matches order total (${tt(o.total)})</span><span>✓ Reference ${o.id} found in the transfer note</span><span>✓ ${o.items.reduce((s, i) => s + i.qty, 0)} code(s) in stock and ready</span></div>`;
+  $('#slipGo').style.display = todo(o) ? '' : 'none';
+  $('#mSlip').classList.add('on');
+}
+$('#slipGo').onclick = () => send(slipFor);
+function closeM() { $$('.modal').forEach(m => m.classList.remove('on')); }
+$$('[data-close]').forEach(b => b.onclick = closeM); $$('.modal').forEach(m => m.onclick = e => { if (e.target === m) closeM(); });
+$$('#tabs button').forEach(b => b.onclick = () => { filter = b.dataset.f; $$('#tabs button').forEach(x => x.classList.toggle('on', x === b)); render(); });
+// add codes
+$('#aCard').innerHTML = CARDS.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+function vals() { const c = byId($('#aCard').value); $('#aVal').innerHTML = c.denoms.map(d => `<option value="${d.value}">${d.label}</option>`).join(''); }
+$('#aCard').onchange = vals; vals();
+$('#addC').onclick = () => $('#mAdd').classList.add('on');
+$('#aGo').onclick = () => { const n = $('#aCodes').value.split('\n').filter(x => x.trim()).length || 5, k = $('#aCard').value + '|' + $('#aVal').value; STOCK[k] = (STOCK[k] || 0) + n; $('#aCodes').value = ''; closeM(); render(); toast(`<span style="color:#34D399">✓</span> ${n} codes added`); };
+// chart
+const DAYS = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Today'], V = [3120, 2480, 3890, 5210, 7420, 6080, 6650], mx = Math.max(...V);
+$('#chart').innerHTML = DAYS.map((d, i) => `<div><i style="height:0" data-h="${V[i] / mx * 100}"></i>${d}</div>`).join('');
+setTimeout(() => $$('#chart i').forEach(i => i.style.height = i.dataset.h + '%'), 200);
+$('#best').innerHTML = [['PSN US$50', 41], ['V-Bucks 2,800', 33], ['Roblox US$25', 27], ['Xbox US$25', 19]].map(([n, k]) => `<div><span>${n}</span><b>${k} sold</b></div>`).join('');
+// a new order lands every so often (concept)
+let gi = 20;
+setInterval(() => { const o = fake(gi++, 0, 'paid'); o.t = Date.now(); SEED.unshift(o); fresh.add(o.id); render(); toast(`<span style="color:#FBBF24">●</span> New order ${o.id} · ${tt(o.total)} · slip attached`); }, 30000);
+setInterval(render, 5000);
+render();
+</script>
+</body>
+</html>

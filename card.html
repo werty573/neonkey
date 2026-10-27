@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Card · NeonKey</title>
+<meta name="theme-color" content="#06050D">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.crumbs{padding:28px 0 0;font-size:14px;color:var(--dim)}.crumbs a:hover{color:var(--txt)}
+.pd{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:30px 0 80px;align-items:start}
+.vis{position:sticky;top:100px}
+.vis .stage{position:relative;padding:50px 30px;border-radius:30px;background:radial-gradient(70% 70% at 50% 40%,color-mix(in srgb,var(--c3) 30%,transparent),transparent 70%),var(--panel);border:1px solid var(--line);perspective:1200px;overflow:hidden}
+.vis .gc{max-width:440px;margin:0 auto;transition:transform .25s ease-out;transform-style:preserve-3d}
+.vis .gc .nm{font-size:clamp(20px,2.6vw,30px)}.vis .gc .val{font-size:clamp(18px,2.2vw,26px)}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border-radius:11px;background:rgba(255,255,255,.04);border:1px solid var(--line);font:600 13px/1 var(--bd);color:var(--mut)}
+.badge b{color:var(--txt)}
+h1{font:800 clamp(30px,4vw,48px)/1.02 var(--hd);letter-spacing:-.035em}
+.lead{color:var(--mut);margin:14px 0 26px;font-size:17px}
+.lbl{font:700 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:26px 0 12px}
+.denoms{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.dn{padding:14px 14px 13px;border-radius:14px;background:var(--panel);border:1.5px solid var(--line);text-align:left;transition:.18s}
+.dn:hover{border-color:var(--line2)}
+.dn b{display:block;font:700 15px/1.2 var(--bd)}.dn span{font:700 14px/1 var(--mono);color:var(--cy)}
+.dn.on{border-color:var(--vio);background:rgba(139,92,246,.16);box-shadow:0 0 0 4px rgba(139,92,246,.14)}
+.buy{margin-top:26px;padding:22px;border-radius:20px;background:var(--panel);border:1px solid var(--line2)}
+.buy .row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.buy .price{font:900 40px/1 var(--hd);letter-spacing:-.04em}
+.buy .price small{display:block;font:500 13px/1.4 var(--bd);color:var(--mut);letter-spacing:0;margin-top:6px}
+.buy .qty button{width:40px;height:40px}.buy .qty span{min-width:34px;font-size:16px}
+.buy .acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.note{display:flex;gap:12px;margin-top:16px;padding:14px 16px;border-radius:14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.22);font-size:14px;color:#BFEFF7}
+.redeem{margin-top:34px}
+.redeem ol{list-style:none;display:grid;gap:10px;counter-reset:r}
+.redeem li{counter-increment:r;display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.redeem li::before{content:counter(r);flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(139,92,246,.2);font:800 13px/1 var(--mono);color:var(--vio2)}
+.ffid{display:none}
+.rel{padding-bottom:40px}
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:45;display:none;align-items:center;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(10,8,22,.95);border-top:1px solid var(--line2);backdrop-filter:blur(12px)}
+.sticky .p{font:800 20px/1 var(--hd);flex:1}.sticky .p small{display:block;font:500 12px/1.3 var(--bd);color:var(--mut)}
+@media (max-width:900px){.pd{grid-template-columns:1fr;gap:30px}.vis{position:static}.sticky{display:flex}.fab,.ticker{bottom:84px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="crumbs"><a href="index.html">Store</a> / <a href="index.html#cards">Cards</a> / <span id="cr"></span></div>
+  <div class="pd">
+    <div class="vis"><div class="stage" id="stage"></div>
+      <div class="badges"><span class="badge">⚡ Delivered in <b>~4 min</b></span><span class="badge">🔒 Verified codes</span><span class="badge" id="rgB"></span></div></div>
+    <div>
+      <div class="eyebrow" id="cat"></div>
+      <h1 id="nm" style="margin-top:12px"></h1>
+      <p class="lead" id="bl"></p>
+      <div class="lbl">Choose amount</div>
+      <div class="denoms" id="dn"></div>
+      <div class="ffid field" id="ffid" style="margin-top:20px"><label for="pid">Your Free Fire Player ID</label><input id="pid" inputmode="numeric" placeholder="e.g. 1234567890"><span class="err">Enter your 8–12 digit Player ID</span></div>
+      <div class="buy">
+        <div class="row"><div class="price" id="pr"></div><span class="qty"><button id="qm" aria-label="Less">−</button><span id="qn">1</span><button id="qp" aria-label="More">+</button></span></div>
+        <div class="acts"><button class="btn btn-g" id="add">Add to cart</button><button class="btn btn-p" id="now">Buy now</button></div>
+        <div class="note"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="2" style="flex:none"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span id="rgN"></span></div>
+      </div>
+      <div class="redeem"><div class="lbl">How to redeem</div><ol id="rd"></ol></div>
+    </div>
+  </div>
+  <section class="rel"><div class="sh"><h2 style="font-size:clamp(24px,3vw,36px)">Gamers also buy</h2></div><div class="tiles" id="rel"></div></section>
+</main>
+<div class="sticky" id="sticky"><div class="p" id="sp"></div><button class="btn btn-p" id="sAdd">Add to cart</button></div>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+shell('All cards');
+const c = byId(new URLSearchParams(location.search).get('id')) || CARDS[0];
+let d = c.denoms[Math.min(2, c.denoms.length - 1)], qty = 1;
+document.title = `${c.name} cards in TT$ · NeonKey`;
+$('#cr').textContent = c.name; $('#nm').textContent = c.name + (c.id === 'freefire' ? ' top-up' : ' digital card');
+$('#bl').textContent = c.blurb; $('#cat').textContent = CATS.find(x => x[0] === c.cat)[1] + ' · ' + c.region;
+$('#rgB').innerHTML = `🌐 <b>${c.region}</b>`;
+$('#rgN').textContent = c.id === 'freefire' ? 'Top-ups go straight to your Player ID. No code to type. Double-check your ID before paying.'
+  : `Region: ${c.region}. Not sure which region your account is on? Message us before ordering. Digital codes can't be refunded once sent.`;
+$('#rd').innerHTML = c.redeem.map(s => `<li>${s}</li>`).join('');
+if (c.id === 'freefire') $('#ffid').style.display = 'flex';
+function draw() {
+  $('#stage').innerHTML = cardArt(c, d.label.replace(' V-Bucks', '').replace(' Diamonds', ' 💎'), 'NEONKEY · DIGITAL CODE');
+  $('#stage').style.cssText = `--c3:${c.c3}`;
+  $('#dn').innerHTML = c.denoms.map((x, i) => `<button class="dn ${x === d ? 'on' : ''}" data-i="${i}"><b>${x.label}</b><span>${tt(x.ttd)}</span></button>`).join('');
+  $$('#dn .dn').forEach(b => b.onclick = () => { d = c.denoms[b.dataset.i]; draw(); });
+  $('#pr').innerHTML = `${tt(d.ttd * qty)}<small>${qty} × ${d.label} · TT$ all-in, no fees</small>`;
+  $('#sp').innerHTML = `${tt(d.ttd * qty)}<small>${qty} × ${c.short} ${d.label}</small>`;
+  $('#qn').textContent = qty;
+}
+draw();
+$('#qm').onclick = () => { qty = Math.max(1, qty - 1); draw(); }; $('#qp').onclick = () => { qty = Math.min(10, qty + 1); draw(); };
+function okId() { if (c.id !== 'freefire') return true; const ok = /^\d{8,12}$/.test($('#pid').value.trim()); $('#ffid').classList.toggle('bad', !ok); if (ok) try { localStorage.setItem('nk_ffid', $('#pid').value.trim()); } catch {} return ok; }
+function add() { if (!okId()) { $('#pid').focus(); return false; } Cart.add(c.id, d.value, qty); toast(`<span style="color:#34D399">✓</span> Added ${qty} × ${c.short} ${d.label}`); return true; }
+$('#add').onclick = () => { if (add()) openCart(); }; $('#sAdd').onclick = () => { if (add()) openCart(); };
+$('#now').onclick = () => { if (add()) location.href = 'checkout.html'; };
+// tilt
+const stg = $('#stage');
+stg.addEventListener('pointermove', e => { const r = stg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; $('.gc', stg).style.transform = `rotateY(${x * 22}deg) rotateX(${-y * 18}deg)`; });
+stg.addEventListener('pointerleave', () => $('.gc', stg).style.transform = '');
+$('#rel').innerHTML = CARDS.filter(x => x.id !== c.id && (x.cat === c.cat || x.hot)).slice(0, 4).map(x => `<a class="tile" href="card.html?id=${x.id}">${cardArt(x)}<div class="meta"><h3>${x.name}</h3><span class="from">from <b>${tt(fromPrice(x))}</b></span></div></a>`).join('');
+</script>
+</body>
+</html>
