@@ -3,36 +3,37 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Track your order · NeonKey</title>
-<meta name="theme-color" content="#06050D">
+<meta name="theme-color" content="#0C0C0D" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F2F2EF" media="(prefers-color-scheme: light)">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <link rel="stylesheet" href="style.css">
 <style>
 .tk{max-width:860px;margin:0 auto;padding:40px 0 80px}
-h1{font:800 clamp(28px,4vw,46px)/1.02 var(--hd);letter-spacing:-.035em}
+h1{font:700 clamp(28px,4vw,46px)/1.02 var(--hd);letter-spacing:-.035em}
 .find{display:flex;gap:10px;margin-top:22px}.find input{flex:1;height:54px;padding:0 18px;border-radius:14px;background:var(--bg2);border:1px solid var(--line2);outline:0;font:600 16px/1 var(--mono);text-transform:uppercase}
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:30px 0 18px}
-.head .id{font:800 26px/1 var(--mono);color:var(--cy)}
+.head .id{font:700 26px/1 var(--mono);color:var(--cy)}
 .status{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;font:700 13px/1 var(--bd)}
-.status.wait{background:rgba(251,191,36,.12);color:var(--warn)}.status.ok{background:rgba(52,211,153,.13);color:var(--ok)}
-.status i{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.status.wait{background:color-mix(in srgb,var(--warn) 12%,transparent);color:var(--warn)}.status.ok{background:color-mix(in srgb,var(--acc) 13%,transparent);color:var(--ok)}
+.status i{width:8px;height:8px;border-radius:50%;background:currentColor;}
 .status.wait i{animation:bl 1s infinite}@keyframes bl{50%{opacity:.25}}
 .tl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:26px 24px;margin-bottom:18px}
 .tl .s{position:relative;text-align:center;font-size:13px;color:var(--dim)}
 .tl .s::before{content:"";position:absolute;top:17px;left:-50%;right:50%;height:3px;background:var(--line2)}
 .tl .s:first-child::before{display:none}
-.tl .s.done::before{background:linear-gradient(90deg,var(--vio),var(--cy))}
-.tl .dot{position:relative;z-index:1;width:36px;height:36px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;background:var(--bg2);border:2px solid var(--line2);font:800 13px/1 var(--mono);transition:.4s}
-.tl .s.done .dot{background:linear-gradient(135deg,var(--vio),var(--cy));border-color:transparent;color:#fff;box-shadow:0 0 20px rgba(139,92,246,.6)}
-.tl .s.cur .dot{border-color:var(--vio);animation:pu 1.4s infinite}@keyframes pu{50%{box-shadow:0 0 0 8px rgba(139,92,246,.15)}}
+.tl .s.done::before{background:var(--acc)}
+.tl .dot{position:relative;z-index:1;width:36px;height:36px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;background:var(--bg2);border:2px solid var(--line2);font:700 13px/1 var(--mono);transition:.4s}
+.tl .s.done .dot{background:var(--acc);border-color:transparent;color:var(--acc-ink)}
+.tl .s.cur .dot{border-color:var(--vio);animation:pu 1.4s infinite}@keyframes pu{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--acc) 15%,transparent)}}
 .tl .s b{display:block;color:var(--txt);font-size:14px}.tl .s.done,.tl .s.cur{color:var(--mut)}
 .it{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:22px;margin-bottom:14px;align-items:center}
 .it .gc .nm{font-size:14px}.it .gc .tg,.it .gc .chipx{display:none}
-.it h3{font:800 18px/1.2 var(--hd)}.it small{color:var(--mut)}
+.it h3{font:700 18px/1.2 var(--hd)}.it small{color:var(--mut)}
 .code{margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .code .box{position:relative;flex:1;min-width:220px;padding:16px 18px;border-radius:14px;background:var(--bg2);border:1px dashed var(--line2);font:700 20px/1 var(--mono);letter-spacing:.08em;overflow:hidden}
 .code .box.lock{color:var(--dim)}
-.code .box .cover{position:absolute;inset:0;display:grid;place-items:center;background:repeating-linear-gradient(45deg,rgba(139,92,246,.25) 0 10px,rgba(139,92,246,.12) 10px 20px);backdrop-filter:blur(6px);font:700 13px/1 var(--bd);letter-spacing:.02em;color:#fff;cursor:pointer}
+.code .box .cover{position:absolute;inset:0;display:grid;place-items:center;background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--acc) 25%,transparent) 0 10px,color-mix(in srgb,var(--acc) 12%,transparent) 10px 20px);backdrop-filter:blur(6px);font:700 13px/1 var(--bd);letter-spacing:.02em;color:#fff;cursor:pointer}
 .how{margin-top:10px;font-size:14px;color:var(--mut)}.how summary{cursor:pointer;color:var(--vio2);font-weight:600}
 .how ol{margin:10px 0 0 18px;display:grid;gap:4px}
 .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
@@ -74,16 +75,16 @@ function render(o) {
   const S = [['Order placed', 'We got it'], ['Payment received', o.method === 'card' ? 'Card authorised' : o.slip ? 'Slip attached' : 'Awaiting slip'], ['Payment verified', 'Checked by NeonKey'], ['Code delivered', 'Email + WhatsApp']];
   $('#tk').innerHTML = `
     <div class="eyebrow">Order tracking</div>
-    <div class="head"><div><h1>${st === 4 ? 'Your code is ready 🎮' : st === 3 ? 'Payment verified. Sending your code…' : 'Thanks, ' + o.name.split(' ')[0] + '! We\'re on it.'}</h1></div></div>
-    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px"><span class="id" style="font:800 22px/1 var(--mono);color:var(--cy)">${o.id}</span><span class="status ${st === 4 ? 'ok' : 'wait'}"><i></i>${st === 4 ? 'Delivered' : st === 3 ? 'Sending code' : st === 2 ? 'Verifying payment' : 'Waiting for payment'}</span></div>
+    <div class="head"><div><h1>${st === 4 ? 'Your code is ready' : st === 3 ? 'Payment verified. Sending your code…' : 'Thanks, ' + o.name.split(' ')[0] + '! We\'re on it.'}</h1></div></div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px"><span class="id" style="font:700 22px/1 var(--mono);color:var(--cy)">${o.id}</span><span class="status ${st === 4 ? 'ok' : 'wait'}"><i></i>${st === 4 ? 'Delivered' : st === 3 ? 'Sending code' : st === 2 ? 'Verifying payment' : 'Waiting for payment'}</span></div>
     <div class="tl panel">${S.map(([a, b], i) => `<div class="s ${i < st ? 'done' : i === st ? 'cur' : ''}"><div class="dot">${i < st ? '✓' : i + 1}</div><b>${a}</b>${b}</div>`).join('')}</div>
     ${o.items.map((it, k) => { const c = byId(it.id); return [...Array(it.qty)].map((_, n) => { const key = k + '-' + n, cd = code(o.id, it, n);
-      return `<div class="it panel">${cardArt(c, c.short.length > 7 ? '' : it.label.replace(' V-Bucks', '').replace(' Diamonds', ' 💎'))}<div><h3>${c.name} · ${it.label}</h3><small>${tt(it.ttd)}${it.qty > 1 ? ` · card ${n + 1} of ${it.qty}` : ''}</small>
+      return `<div class="it panel">${cardArt(c, c.short.length > 7 ? '' : it.label.replace(' V-Bucks', '').replace(' Diamonds', ''))}<div><h3>${c.name} · ${it.label}</h3><small>${tt(it.ttd)}${it.qty > 1 ? ` · card ${n + 1} of ${it.qty}` : ''}</small>
         ${c.id === 'freefire' ? `<div class="code"><div class="box ${st < 4 ? 'lock' : ''}" style="font-size:16px;letter-spacing:0">${st < 4 ? 'Top-up queued for ID ' + (o.ffid || '••••••••') : '✓ Diamonds sent to Player ID ' + (o.ffid || '1234567890')}</div></div>`
         : `<div class="code"><div class="box ${st < 4 ? 'lock' : ''}">${st < 4 ? '••••-••••-••••' : cd}${st === 4 && !rev[key] ? `<div class="cover" data-rv="${key}">Tap to reveal code</div>` : ''}</div>${st === 4 ? `<button class="btn btn-g btn-sm" data-cp="${cd}">Copy</button>` : ''}</div>`}
         <details class="how"><summary>How to redeem</summary><ol>${c.redeem.map(s => `<li>${s}</li>`).join('')}</ol></details></div></div>`; }).join(''); }).join('')}
     <div class="meta"><div>Total paid<b>${tt(o.total)}</b></div><div>Payment<b>${o.method === 'bank' ? o.bank : o.method === 'card' ? 'Card (WiPay)' : 'WhatsApp order'}</b></div><div>Placed<b>${ago} min ago</b></div></div>
-    <p class="muted" style="margin-top:22px;font-size:14px">Need help with this order? <a href="https://wa.me/${WA}?text=${encodeURIComponent('Hi NeonKey, about order ' + o.id)}" target="_blank" rel="noopener" style="color:#A78BFA">Message us on WhatsApp</a> with your reference ${o.id}.</p>`;
+    <p class="muted" style="margin-top:22px;font-size:14px">Need help with this order? <a href="https://wa.me/${WA}?text=${encodeURIComponent('Hi NeonKey, about order ' + o.id)}" target="_blank" rel="noopener" style="color:var(--acc-tx)">Message us on WhatsApp</a> with your reference ${o.id}.</p>`;
   $$('[data-rv]').forEach(b => b.onclick = () => { rev[b.dataset.rv] = 1; render(o); });
   $$('[data-cp]').forEach(b => b.onclick = () => { navigator.clipboard?.writeText(b.dataset.cp).catch(() => {}); b.textContent = 'Copied ✓'; });
 }
@@ -91,13 +92,13 @@ function lookup() {
   const all = Orders.all();
   $('#tk').innerHTML = `<div class="eyebrow">Order tracking</div><h1 style="margin-top:14px">Track your order</h1><p class="muted" style="margin-top:12px">Enter the reference from your confirmation, e.g. NK-4821.</p>
     <form class="find" id="f"><input id="oid" placeholder="NK-0000" aria-label="Order reference"><button class="btn btn-p">Track</button></form>
-    ${all.length ? `<div class="recent"><div class="eyebrow" style="color:#6E6A98">Your recent orders on this device</div>${all.map(o => `<a href="track.html?o=${o.id}"><span style="color:#22D3EE">${o.id}</span><span>${tt(o.total)} · ${o.status === 'sent' ? 'Delivered' : 'In progress'}</span></a>`).join('')}</div>` : ''}`;
+    ${all.length ? `<div class="recent"><div class="eyebrow" style="color:var(--dim)">Your recent orders on this device</div>${all.map(o => `<a href="track.html?o=${o.id}"><span style="color:var(--acc-tx)">${o.id}</span><span>${tt(o.total)} · ${o.status === 'sent' ? 'Delivered' : 'In progress'}</span></a>`).join('')}</div>` : ''}`;
   $('#f').onsubmit = e => { e.preventDefault(); const id = $('#oid').value.trim().toUpperCase(); if (Orders.get(id)) location.href = `track.html?o=${id}`; else toast('No order with that reference on this device'); };
 }
 const oid = P.get('o');
 if (oid && Orders.get(oid)) {
   let o = Orders.get(oid); render(tick(o)); let last = o.status;
-  setInterval(() => { const n = tick(Orders.get(oid)); if (n.status !== last) { last = n.status; render(n); if (n.status === 'sent') toast('<span style="color:#34D399">✓</span> Your code is ready'); } }, 1000);
+  setInterval(() => { const n = tick(Orders.get(oid)); if (n.status !== last) { last = n.status; render(n); if (n.status === 'sent') toast('<i class="ti ti-circle-check"></i> Your code is ready'); } }, 1000);
 } else lookup();
 </script>
 </body>

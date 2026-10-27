@@ -3,45 +3,46 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Owner view · NeonKey</title>
-<meta name="theme-color" content="#06050D">
+<meta name="theme-color" content="#0C0C0D" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F2F2EF" media="(prefers-color-scheme: light)">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <link rel="stylesheet" href="style.css">
 <style>
 .ow{padding:34px 0 80px}
 .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-h1{font:800 clamp(26px,3.4vw,40px)/1 var(--hd);letter-spacing:-.035em}
-.demo{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:#FDE68A;font:600 13px/1.3 var(--bd)}
+h1{font:700 clamp(26px,3.4vw,40px)/1 var(--hd);letter-spacing:-.035em}
+.demo{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;background:color-mix(in srgb,var(--warn) 10%,transparent);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);color:var(--warn);font:600 13px/1.3 var(--bd)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}
-.kpi{padding:20px}.kpi small{color:var(--mut);font-size:13px}.kpi b{display:block;font:800 30px/1 var(--hd);letter-spacing:-.03em;margin-top:10px}
-.kpi .d{font:600 12px/1 var(--mono);color:var(--ok);margin-top:8px}.kpi.hl{border-color:rgba(251,191,36,.4);background:linear-gradient(180deg,rgba(251,191,36,.08),var(--panel))}.kpi.hl b{color:var(--warn)}
+.kpi{padding:20px}.kpi small{color:var(--mut);font-size:13px}.kpi b{display:block;font:700 30px/1 var(--hd);letter-spacing:-.03em;margin-top:10px}
+.kpi .d{font:600 12px/1 var(--mono);color:var(--ok);margin-top:8px}.kpi.hl{border-color:color-mix(in srgb,var(--warn) 40%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--warn) 8%,transparent),var(--panel))}.kpi.hl b{color:var(--warn)}
 .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;align-items:start}
-.box{padding:22px}.box h2{font:800 18px/1 var(--hd);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
-.tabs{display:flex;gap:6px}.tabs button{padding:8px 12px;border-radius:9px;font:600 13px/1 var(--bd);color:var(--mut)}.tabs button.on{background:rgba(139,92,246,.18);color:#fff}
+.box{padding:22px}.box h2{font:700 18px/1 var(--hd);display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}
+.tabs{display:flex;gap:6px}.tabs button{padding:8px 14px;border-radius:999px;font:600 13px/1 var(--bd);color:var(--mut)}.tabs button.on{background:var(--txt);color:var(--bg)}
 .ord{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);margin-bottom:10px;transition:background .4s,border-color .4s}
-.ord.new{border-color:var(--warn);background:rgba(251,191,36,.07)}
-.ord .sl{width:52px;height:52px;border-radius:10px;background:#1A1736 center/cover;display:grid;place-items:center;font:700 10px/1.1 var(--mono);color:var(--dim);text-align:center;cursor:pointer;border:1px solid var(--line2)}
+.ord.new{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 7%,transparent)}
+.ord .sl{width:52px;height:52px;border-radius:10px;background:var(--panel2) center/cover;display:grid;place-items:center;font:700 10px/1.1 var(--mono);color:var(--dim);text-align:center;cursor:pointer;border:1px solid var(--line2)}
 .ord .r1{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.ord .id{font:700 14px/1 var(--mono);color:var(--cy)}
 .ord .who{font-weight:700}.ord small{color:var(--mut);font-size:13px}
 .pill{padding:5px 9px;border-radius:8px;font:700 11px/1 var(--mono);letter-spacing:.06em}
-.pill.w{background:rgba(251,191,36,.14);color:var(--warn)}.pill.s{background:rgba(52,211,153,.14);color:var(--ok)}.pill.v{background:rgba(139,92,246,.18);color:var(--vio2)}
+.pill.w{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn)}.pill.s{background:color-mix(in srgb,var(--acc) 14%,transparent);color:var(--ok)}.pill.v{background:color-mix(in srgb,var(--acc) 18%,transparent);color:var(--vio2)}
 .ord .act{text-align:right}.ord .act b{display:block;font:700 15px/1 var(--mono);margin-bottom:8px}
 .stock{display:grid;gap:12px}
 .sk .h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-weight:700;font-size:14px}
 .sk .d{display:flex;gap:6px;flex-wrap:wrap}
 .sk .d span{padding:6px 9px;border-radius:9px;background:var(--bg2);border:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--mut)}
-.sk .d span b{color:var(--txt)}.sk .d span.low{border-color:rgba(251,113,133,.5);background:rgba(251,113,133,.08);color:#FDA4AF}.sk .d span.low b{color:#FB7185}
+.sk .d span b{color:var(--txt)}.sk .d span.low{border-color:color-mix(in srgb,var(--bad) 50%,transparent);background:color-mix(in srgb,var(--bad) 8%,transparent);color:var(--bad)}.sk .d span.low b{color:var(--bad)}
 .chart{display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:10px}
 .chart div{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;font:600 11px/1 var(--mono);color:var(--dim);height:100%;justify-content:flex-end}
-.chart i{width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--vio),rgba(139,92,246,.25));transition:height .8s cubic-bezier(.2,.8,.2,1)}
-.chart div:last-child i{background:linear-gradient(180deg,var(--cy),rgba(34,211,238,.25))}
+.chart i{width:100%;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,var(--vio),color-mix(in srgb,var(--acc) 25%,transparent));transition:height .8s cubic-bezier(.2,.8,.2,1)}
+.chart div:last-child i{background:linear-gradient(180deg,var(--cy),color-mix(in srgb,var(--acc) 25%,transparent))}
 .best{display:grid;gap:8px;margin-top:16px}.best div{display:flex;justify-content:space-between;font-size:14px;color:var(--mut)}.best b{color:var(--txt);font-family:var(--mono)}
 .modal{position:fixed;inset:0;z-index:95;display:none;place-items:center;padding:20px;background:rgba(3,2,10,.7);backdrop-filter:blur(6px)}
 .modal.on{display:grid}
 .mbox{width:min(460px,100%);max-height:90vh;overflow:auto;padding:24px;border-radius:22px;background:var(--bg2);border:1px solid var(--line2)}
-.mbox h3{font:800 20px/1.1 var(--hd);margin-bottom:14px}
+.mbox h3{font:700 20px/1.1 var(--hd);margin-bottom:14px}
 .fslip{border-radius:16px;background:#fff;color:#1b1b1b;padding:20px;font-size:14px}
-.fslip .bk{font:800 16px/1 var(--bd);color:#B4123A;margin-bottom:12px}
+.fslip .bk{font:700 16px/1 var(--bd);color:#B4123A;margin-bottom:12px}
 .fslip .r{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #eee}.fslip .r b{font-family:var(--mono)}
 .match{display:grid;gap:6px;margin:14px 0;font:600 14px/1.3 var(--bd);color:var(--ok)}
 @media (max-width:1000px){.grid{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
@@ -50,12 +51,12 @@ h1{font:800 clamp(26px,3.4vw,40px)/1 var(--hd);letter-spacing:-.035em}
 </head>
 <body data-noticker="1">
 <main class="wrap ow">
-  <div class="top"><div><div class="eyebrow">Owner view</div><h1 style="margin-top:12px">Good evening 👋</h1></div><span class="demo">Concept demo · this is what the owner sees after logging in</span></div>
+  <div class="top"><div><div class="eyebrow">Owner view</div><h1 style="margin-top:12px">Good evening</h1></div><span class="demo">Concept demo · this is what the owner sees after logging in</span></div>
   <div class="kpis">
     <div class="kpi panel"><small>Sales today</small><b id="kS"></b><div class="d">▲ 18% vs last Monday</div></div>
     <div class="kpi panel"><small>Orders today</small><b id="kO"></b><div class="d" id="kOd"></div></div>
     <div class="kpi panel"><small>Avg. time to code</small><b>4m 12s</b><div class="d">▼ from 47 min on DMs</div></div>
-    <div class="kpi panel hl"><small>Waiting for you</small><b id="kW"></b><div class="d" style="color:#FBBF24">payments to verify</div></div>
+    <div class="kpi panel hl"><small>Waiting for you</small><b id="kW"></b><div class="d" style="color:var(--warn)">payments to verify</div></div>
   </div>
   <div class="grid">
     <div class="box panel"><h2>Orders <span class="tabs" id="tabs"><button class="on" data-f="todo">To verify</button><button data-f="all">All</button></span></h2><div id="list"></div></div>
@@ -95,15 +96,15 @@ function render() {
   $('#kW').textContent = T.length;
   const L = filter === 'todo' ? T : A;
   $('#list').innerHTML = L.length ? L.map(o => { const c = byId(o.items[0].id), more = o.items.length - 1;
-    return `<div class="ord ${fresh.has(o.id) ? 'new' : ''}"><div class="sl" data-slip="${o.id}" style="${o.slipURL ? `background-image:url(${o.slipURL})` : ''}">${o.slipURL ? '' : o.slip ? 'SLIP<br>VIEW' : '—'}</div>
+    return `<div class="ord ${fresh.has(o.id) ? 'new' : ''}"><div class="sl" data-slip="${o.id}" style="${o.slipURL ? `background-image:url(${o.slipURL})` : ''}">${o.slipURL ? '' : o.slip ? 'SLIP<br>VIEW' : '-'}</div>
       <div><div class="r1"><span class="id">${o.id}</span><span class="pill ${todo(o) ? 'w' : o.status === 'verified' ? 'v' : 's'}">${todo(o) ? 'VERIFY' : o.status === 'verified' ? 'SENDING' : 'CODE SENT'}</span>${o.mine ? '<span class="pill v">FROM THIS DEVICE</span>' : ''}</div>
       <div class="who" style="margin-top:6px">${o.name}</div><small>${o.items[0].qty} × ${c.short} ${o.items[0].label}${more ? ` + ${more} more` : ''} · ${o.method === 'bank' ? o.bank : o.method} · ${ago(o.t)}</small></div>
       <div class="act"><b>${tt(o.total)}</b>${todo(o) ? `<button class="btn btn-p btn-sm" data-go="${o.id}">Verify & send</button>` : `<small>✓ ${o.wa ? 'WhatsApp + email' : 'email'}</small>`}</div></div>`; }).join('')
-    : `<div class="empty" style="padding:40px 10px">All caught up. No payments waiting. 🎉</div>`;
+    : `<div class="empty" style="padding:40px 10px">All caught up. No payments waiting.</div>`;
   $$('[data-go]').forEach(b => b.onclick = () => send(b.dataset.go));
   $$('[data-slip]').forEach(b => b.onclick = () => openSlip(b.dataset.slip));
   // stock
-  $('#stock').innerHTML = CARDS.slice(0, 7).map(c => `<div class="sk"><div class="h"><span>${c.name}</span><small class="muted">${c.denoms.reduce((s, d) => s + STOCK[c.id + '|' + d.value], 0)} codes</small></div><div class="d">${c.denoms.slice(0, 6).map(d => { const n = STOCK[c.id + '|' + d.value]; return `<span class="${n < 3 ? 'low' : ''}">${d.label.replace('US', '').replace(' V-Bucks', 'V').replace(' Diamonds', '💎')} <b>${n}</b></span>`; }).join('')}</div></div>`).join('');
+  $('#stock').innerHTML = CARDS.slice(0, 7).map(c => `<div class="sk"><div class="h"><span>${c.name}</span><small class="muted">${c.denoms.reduce((s, d) => s + STOCK[c.id + '|' + d.value], 0)} codes</small></div><div class="d">${c.denoms.slice(0, 6).map(d => { const n = STOCK[c.id + '|' + d.value]; return `<span class="${n < 3 ? 'low' : ''}">${d.label.replace('US', '').replace(' V-Bucks', 'V').replace(' Diamonds', ' dia')} <b>${n}</b></span>`; }).join('')}</div></div>`).join('');
 }
 function find(id) { return all().find(o => o.id === id); }
 function send(id) {
@@ -112,7 +113,7 @@ function send(id) {
   if (o.mine) { const m = Orders.get(id); m.status = 'sent'; m.sentAt = Date.now(); m.auto = false; Orders.save(m); }
   else SEED = SEED.map(x => x.id === id ? { ...x, status: 'sent' } : x);
   fresh.delete(id); closeM(); render();
-  toast(`<span style="color:#34D399">✓</span> Code sent to ${o.name.split(' ')[0]} on WhatsApp + email`);
+  toast(`<i class="ti ti-circle-check"></i> Code sent to ${o.name.split(' ')[0]} on WhatsApp + email`);
 }
 function openSlip(id) {
   const o = find(id); slipFor = id;
@@ -131,7 +132,7 @@ $('#aCard').innerHTML = CARDS.map(c => `<option value="${c.id}">${c.name}</optio
 function vals() { const c = byId($('#aCard').value); $('#aVal').innerHTML = c.denoms.map(d => `<option value="${d.value}">${d.label}</option>`).join(''); }
 $('#aCard').onchange = vals; vals();
 $('#addC').onclick = () => $('#mAdd').classList.add('on');
-$('#aGo').onclick = () => { const n = $('#aCodes').value.split('\n').filter(x => x.trim()).length || 5, k = $('#aCard').value + '|' + $('#aVal').value; STOCK[k] = (STOCK[k] || 0) + n; $('#aCodes').value = ''; closeM(); render(); toast(`<span style="color:#34D399">✓</span> ${n} codes added`); };
+$('#aGo').onclick = () => { const n = $('#aCodes').value.split('\n').filter(x => x.trim()).length || 5, k = $('#aCard').value + '|' + $('#aVal').value; STOCK[k] = (STOCK[k] || 0) + n; $('#aCodes').value = ''; closeM(); render(); toast(`<i class="ti ti-circle-check"></i> ${n} codes added`); };
 // chart
 const DAYS = ['Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Today'], V = [3120, 2480, 3890, 5210, 7420, 6080, 6650], mx = Math.max(...V);
 $('#chart').innerHTML = DAYS.map((d, i) => `<div><i style="height:0" data-h="${V[i] / mx * 100}"></i>${d}</div>`).join('');
@@ -139,7 +140,7 @@ setTimeout(() => $$('#chart i').forEach(i => i.style.height = i.dataset.h + '%')
 $('#best').innerHTML = [['PSN US$50', 41], ['V-Bucks 2,800', 33], ['Roblox US$25', 27], ['Xbox US$25', 19]].map(([n, k]) => `<div><span>${n}</span><b>${k} sold</b></div>`).join('');
 // a new order lands every so often (concept)
 let gi = 20;
-setInterval(() => { const o = fake(gi++, 0, 'paid'); o.t = Date.now(); SEED.unshift(o); fresh.add(o.id); render(); toast(`<span style="color:#FBBF24">●</span> New order ${o.id} · ${tt(o.total)} · slip attached`); }, 30000);
+setInterval(() => { const o = fake(gi++, 0, 'paid'); o.t = Date.now(); SEED.unshift(o); fresh.add(o.id); render(); toast(`<i class="ti ti-bell"></i> New order ${o.id} · ${tt(o.total)} · slip attached`); }, 30000);
 setInterval(render, 5000);
 render();
 </script>

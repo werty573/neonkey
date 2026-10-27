@@ -3,20 +3,21 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>How it works · NeonKey</title>
-<meta name="theme-color" content="#06050D">
+<meta name="theme-color" content="#0C0C0D" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#F2F2EF" media="(prefers-color-scheme: light)">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <link rel="stylesheet" href="style.css">
 <style>
 .hp{display:grid;grid-template-columns:220px 1fr;gap:44px;padding:40px 0 70px;align-items:start}
 .side{position:sticky;top:100px;display:grid;gap:4px}
-.side a{padding:11px 14px;border-radius:11px;font:600 14px/1 var(--bd);color:var(--mut)}.side a:hover{background:rgba(255,255,255,.05);color:var(--txt)}
-h1{font:900 clamp(32px,5vw,58px)/1 var(--hd);letter-spacing:-.04em}
+.side a{padding:11px 14px;border-radius:11px;font:600 14px/1 var(--bd);color:var(--mut)}.side a:hover{background:color-mix(in srgb,var(--txt) 5%,transparent);color:var(--txt)}
+h1{font:700 clamp(32px,5vw,58px)/1 var(--hd);letter-spacing:-.04em}
 .blk{padding-top:56px;scroll-margin-top:80px}.blk:first-child{padding-top:0}
-.blk h2{font:800 clamp(24px,3vw,34px)/1.05 var(--hd);letter-spacing:-.03em;margin-bottom:18px}
+.blk h2{font:700 clamp(24px,3vw,34px)/1.05 var(--hd);letter-spacing:-.03em;margin-bottom:18px}
 .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .flow div{padding:20px;border-radius:18px;background:var(--panel);border:1px solid var(--line)}
-.flow b{display:block;font:800 30px/1 var(--hd);color:var(--vio2);margin-bottom:10px}.flow p{font-size:14px;color:var(--mut)}
+.flow b{display:block;font:700 30px/1 var(--hd);color:var(--vio2);margin-bottom:10px}.flow p{font-size:14px;color:var(--mut)}
 .acc{display:grid;gap:10px}
 .acc details{border-radius:16px;background:var(--panel);border:1px solid var(--line);overflow:hidden}
 .acc summary{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;font-weight:700;list-style:none}
@@ -27,7 +28,7 @@ h1{font:900 clamp(32px,5vw,58px)/1 var(--hd);letter-spacing:-.04em}
 .acc .in{padding:0 22px 20px 96px;color:var(--mut)}.acc ol{display:grid;gap:6px;margin-left:18px}
 .pol{display:grid;gap:12px}
 .pol div{display:flex;gap:16px;padding:18px 20px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
-.pol i{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(139,92,246,.16);font-style:normal;font-size:18px}
+.pol i{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--acc) 16%,transparent);font-style:normal;font-size:18px}
 .pol b{display:block;margin-bottom:4px}.pol p{color:var(--mut);font-size:15px}
 .faq summary{padding:18px 20px}.faq .in{padding:0 20px 20px}
 @media (max-width:900px){.hp{grid-template-columns:1fr}.side{position:static;display:flex;overflow:auto}.flow{grid-template-columns:1fr 1fr}.acc .in{padding-left:22px}}
@@ -41,10 +42,10 @@ h1{font:900 clamp(32px,5vw,58px)/1 var(--hd);letter-spacing:-.04em}
       <div class="flow"><div><b>1</b><p>Choose a card and amount. The TT$ price is shown, all-in.</p></div><div><b>2</b><p>Transfer from your bank app using your order reference.</p></div><div><b>3</b><p>Upload the slip. We match the amount and reference.</p></div><div><b>4</b><p>Your code appears on your order page, by email and on WhatsApp.</p></div></div></div>
     <div class="blk" id="redeem"><h2>Redeem guides</h2><div class="acc" id="acc"></div></div>
     <div class="blk" id="policies"><h2>Our policies</h2><div class="pol">
-      <div><i>🏦</i><div><b>Digital cards: bank transfer only</b><p>Digital codes are paid by online or mobile banking (or card, once card payments are live). Your order reference must be in the transfer note.</p></div></div>
-      <div><i>🔒</i><div><b>No refunds once a code is sent</b><p>Digital codes are delivered instantly and can't be taken back, so they can't be refunded once they're forwarded to you. Check your account region before you buy.</p></div></div>
-      <div><i>🚚</i><div><b>Gear for delivery: 25% deposit</b><p>Physical items are reserved with a 25% non-refundable deposit by bank transfer. Pay the balance by transfer or cash on delivery.</p></div></div>
-      <div><i>🧾</i><div><b>Returns on physical items</b><p>Bring the original receipt and the item in the condition it was received. Items damaged by negligence, or reported stolen, can't be refunded.</p></div></div>
+      <div><i class="ti ti-building-bank"></i><div><b>Digital cards: bank transfer only</b><p>Digital codes are paid by online or mobile banking (or card, once card payments are live). Your order reference must be in the transfer note.</p></div></div>
+      <div><i class="ti ti-lock"></i><div><b>No refunds once a code is sent</b><p>Digital codes are delivered instantly and can't be taken back, so they can't be refunded once they're forwarded to you. Check your account region before you buy.</p></div></div>
+      <div><i class="ti ti-truck-delivery"></i><div><b>Gear for delivery: 25% deposit</b><p>Physical items are reserved with a 25% non-refundable deposit by bank transfer. Pay the balance by transfer or cash on delivery.</p></div></div>
+      <div><i class="ti ti-receipt"></i><div><b>Returns on physical items</b><p>Bring the original receipt and the item in the condition it was received. Items damaged by negligence, or reported stolen, can't be refunded.</p></div></div>
     </div></div>
     <div class="blk" id="faq"><h2>FAQ</h2><div class="acc faq">
       <details><summary>How fast will I get my code?</summary><div class="in">Most codes are sent within 5 minutes of your slip being uploaded, 8 AM to midnight, every day. Orders placed overnight are sent first thing in the morning.</div></details>
